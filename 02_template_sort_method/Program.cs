@@ -3,11 +3,9 @@
 впорядковує його за зростанням(чи спаданням)  довільним алгоритмом впорядкування(бульбашкою чи ін.). 
 Перевірити роботу методу для масивів цілого, рядкового типу,  масиву елементів користувацького типу(класу чи структури) 
  */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace _02_template_sort_method
 {
@@ -34,11 +32,11 @@ namespace _02_template_sort_method
         {
             Console.WriteLine(message);
             foreach (var a in arr)
-                Console.Write("{0}\t", a);
+                Console.Write("\t{0}", a);
             Console.WriteLine();
         }
 
-        public struct UserType //: IComparable
+        public struct UserType : IComparable
         {
             public string name;
             public int age;
@@ -48,20 +46,41 @@ namespace _02_template_sort_method
                 name = n;
                 age = a;
             }
+
+            public override string ToString()
+            {
+                return $"Name:\t{name}\tAge:\t{age}\n";
+            }
+
+            public int CompareTo(object obj)
+            {
+                UserType user = (UserType)obj;
+                return this.name.CompareTo(user.name);
+            }
         }
 
-        static void Main(string[] args)
+            static void Main(string[] args)
         {
             int[] arr = { 10, 20, 7, 5, 23 };
-            PrintArr(arr, "\tInt before");
+            PrintArr(arr, "\nInt before");
             SortArr(arr);
-            PrintArr(arr, "\tInt after sorted");
+            PrintArr(arr, "\nInt after sorted");
 
             string[] str = { "zero", "one", "two", "three", "four" };
-            PrintArr(str, "\n\tStr before");
+            PrintArr(str, "\nStr before");
             SortArr(str);
-            PrintArr(str, "\tStr after sorted");
+            PrintArr(str, "\nStr after sorted");
 
+            UserType[] ut = 
+            {
+                new UserType("Ted", 32),
+                new UserType("Will", 17),
+                new UserType("Ann", 25)
+            };
+
+            PrintArr(ut, "\nStruct before");
+            SortArr(ut);
+            PrintArr(ut, "\nStruct after sorted (by name)");
 
             Console.ReadKey();
         }
